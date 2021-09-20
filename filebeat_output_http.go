@@ -1,10 +1,9 @@
 package fshttp
 
 import (
-        "https://github.com/elastic/beats/tree/master/libbeat/beat"
-        "https://github.com/elastic/beats/libbeat/beat"
-        "https://github.com/elastic/beats/libbeat/common"
-        "https://github.com/elastic/beats/libbeat/outputs"
+	"github.com/elastic/beats/libbeat/beat"
+	"github.com/elastic/beats/libbeat/common"
+	"github.com/elastic/beats/libbeat/outputs"
 )
 
 func init() {

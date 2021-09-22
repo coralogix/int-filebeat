@@ -1,0 +1,37 @@
+package fshttp
+
+import (
+	"github.com/elastic/beats/libbeat/beat"
+	"github.com/elastic/beats/libbeat/common"
+	"github.com/elastic/beats/libbeat/outputs"
+)
+
+func init() {
+	outputs.RegisterType("http", newHTTPOutput)
+}
+
+// func newHTTPOutput(_ outputs.IndexManager, _ beat.Info, stats outputs.Observer, cfg *common.Config) (outputs.Group, error) {
+// 	clients := []outputs.NetworkClient{}
+// 	return outputs.Success(batchSize, retryLimit, clients...)
+// }
+
+func newHTTPOutput(_ outputs.IndexManager, _ beat.Info, stats outputs.Observer, cfg *common.Config) (outputs.Group, error) {
+	config := clientConfig{}
+	config.Endpoint = "localhost:8000"
+	config.BatchSize = 1
+	config.RetryLimit = 1
+	config.Workers = 1
+	if err := cfg.Unpack(&config); err != nil {
+		return outputs.Fail(err)
+	}
+
+	clients := make([]outputs.NetworkClient, config.Workers)
+	for i := 0; i < config.Workers; i++ {
+		clients[i] = &httpClient{
+			stats:    stats,
+			endpoint: config.Endpoint,
+		}
+	}
+
+	return outputs.Success(config.BatchSize, config.RetryLimit)
+}

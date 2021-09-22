@@ -19,8 +19,6 @@ func buildLogEntry(e publisher.Event) logEntry {
 	app, _ := e.Content.GetValue("kubernetes.label.app")
 	pod, _ := e.Content.GetValue("kubernetes.pod.name")
 
-	return logEntry{}
-
 	return logEntry{
 		Timestamp: e.Content.Timestamp,
 		Message:   fmt.Sprintf("%v", msg),

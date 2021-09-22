@@ -1,6 +1,17 @@
+package fshttp
+
+import (
+	"bytes"
+	"encoding/json"
+	"io/ioutil"
+	"net/http"
+
+	"github.com/elastic/beats/libbeat/publisher"
+)
+
 func (h *httpClient) Publish(batch publisher.Batch) error {
 	events := batch.Events()
-	s.stats.NewBatch(len(events))
+	h.stats.NewBatch(len(events))
 
 	entries := make([]logEntry, 0, len(events))
 	for _, event := range events {
@@ -15,8 +26,8 @@ func (h *httpClient) Publish(batch publisher.Batch) error {
 		return nil
 	}
 
-	req := http.NewRequest(“POST”, h.endpoint, &buf)
-	req.Header.Set(“content-type”, “application/json”)
+	req, err := http.NewRequest("POST", h.endpoint, &buf)
+	req.Header.Set("content-type", "application/json")
 	resp, err := h.client.Do(req)
 
 	if err != nil {

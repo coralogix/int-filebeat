@@ -26,7 +26,7 @@ func (h *httpClient) Publish(batch publisher.Batch) error {
 		return nil
 	}
 
-	req, err := http.NewRequest("POST", h.endpoint, &buf)
+	req, _ := http.NewRequest("POST", h.endpoint, &buf)
 	req.Header.Set("content-type", "application/json")
 	resp, err := h.client.Do(req)
 

@@ -17,10 +17,6 @@ func init() {
 
 func newHTTPOutput(_ outputs.IndexManager, _ beat.Info, stats outputs.Observer, cfg *common.Config) (outputs.Group, error) {
 	config := clientConfig{}
-	config.Endpoint = "localhost:8000"
-	config.BatchSize = 1
-	config.RetryLimit = 1
-	config.Workers = 1
 	if err := cfg.Unpack(&config); err != nil {
 		return outputs.Fail(err)
 	}

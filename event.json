@@ -1,0 +1,12 @@
+{
+	"@timestamp": "2020-06-30T01:23:04.041Z",
+	"message": "I am a log line",
+	"kubernetes": {
+	  "pod": {
+		"name": "foo-67bd487789"
+	  },
+	  "labels": {
+		"app": "foo"
+	  }
+	}
+  }
